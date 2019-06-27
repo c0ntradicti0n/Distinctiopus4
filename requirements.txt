@@ -2,3 +2,4 @@ nltk
 more_itertools
 sklearn
 allennlp
+torch

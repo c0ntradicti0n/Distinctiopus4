@@ -1,10 +1,12 @@
 from collections import OrderedDict, Iterable
 from functools import wraps
 from itertools import cycle
+
 from nltk import flatten
 from nltk.corpus import wordnet
 from nltk.corpus.reader import Synset
 from overrides import overrides
+
 from xnym_embeddings.dict_tools import balance_complex_tuple_dict, invert_dict
 from sklearn.preprocessing import Normalizer
 from allennlp.modules.token_embedders.token_embedder import TokenEmbedder
@@ -14,6 +16,11 @@ import numpy as np
 import torch
 from multiprocessing import Pool
 
+from torch.optim import adam
+from adabound import adabound
+
+adabound
+o = adam
 
 def rolling_window_lastaxis(a, window):
     """Directly taken from Erik Rigtorp's post to numpy-discussion.
@@ -79,11 +86,38 @@ def wordnet_looker(fun, kind):
     return aux
 
 @wordnet_looker('hyponyms')
-def get_hyponyms(synset):
+def get_hyponyms(synset, depth=0, max_depth=2):
+    if depth > max_depth:
+        return set(synset.hyponyms())
     hyponyms = set()
     for hyponym in synset.hyponyms():
-        hyponyms |= set(get_hyponyms(hyponym))
+        hyponyms |= set(get_hyponyms(hyponym, depth=depth+1))
     return hyponyms | set(synset.hyponyms())
+
+@wordnet_looker('cohyponyms')
+def get_cohyponyms(synset):
+    """ Cohyponyms are for exmaple:
+    Dog, Fish, Insect, because all are animals, as red and blue, because they are colors.
+    """
+    cohyponyms = set()
+    for hypernym in synset.hypernyms():
+        cohyponyms |= set(hypernym.hyponyms())
+    return cohyponyms - set([synset])
+
+@wordnet_looker('cohypernyms')
+def get_cohypernyms(synset):
+    """ Cohypernyms are for exmaple:
+
+    A Legal Document and a Testimony are cohypernyms, because what is a Legal Document is possibly not a Testimony and
+    vice versa, but also that may possibly be the case.
+
+    Dog, Fish, Insect are no cohypernyms, because there is no entity, that is at the same time a Dog and a Fisch or an
+    Insect.
+    """
+    cohypernyms = set()
+    for hyponym in synset.hyponyms():
+        cohypernyms |= set(hyponym.hypernyms())
+    return cohypernyms - set([synset])
 
 @wordnet_looker('hypernyms')
 def get_hypernyms(synset):
@@ -115,7 +149,6 @@ def wordnet_lookup_xnyms (index_to_tokens, fun):
 
         xnyms = [split_multi_word(x.name()) for x in xnyms_syns]
         antonym_dict[(token,)] = xnyms
-
     return antonym_dict
 
 def numerize(d, token2index):
@@ -175,10 +208,13 @@ class XnymEmbedder (TokenEmbedder):
             xnyms_looker_fun = wordnet_lookers[xnyms]
             self.antonym_dict = wordnet_lookup_xnyms(vocab._index_to_token['tokens'], fun=xnyms_looker_fun)
 
-            if xnyms == 'antonyms':
-                self.antonym_dict[('in','common',)] = [('differ',), ('differs',)]
-                print (list(self.antonym_dict.keys())[:10])
-                print (list(self.antonym_dict.values())[:10])
+            self.antonym_dict[('in','common',)] = [('differ',), ('differs',)]
+            self.antonym_dict[('equivocally',)] = [('univocally',)]
+
+            print ('%s-dict' % self.xnyms)
+
+            print (list(self.antonym_dict.keys())[:10])
+            print (list(self.antonym_dict.values())[:10])
 
             self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
 

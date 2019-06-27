@@ -1,7 +1,9 @@
+model=$1
 python -m allennlp.service.server_simple \
+    --include-package attention_please_tagger.attention_please_tagger \
     --include-package xnym_embeddings.xnym_embeddings \
     --include-package difference_predictor.difference_predictor \
-    --archive-path '0.76F1 Model cooked corpus with aspects and repetition of noise.tar.gz' \
+    --archive-path $model \
     --predictor difference-tagger \
     --title "AllenNLP Tutorial" \
     --field-name sentence \

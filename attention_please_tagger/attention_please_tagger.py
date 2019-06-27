@@ -1,5 +1,3 @@
-from allennlp.modules.matrix_attention import LinearMatrixAttention
-
 from typing import Dict, Optional, List, Any
 
 from overrides import overrides
@@ -70,9 +68,9 @@ class AttentiveCrfTagger(Model):
                  encoder: Seq2SeqEncoder,
                  label_namespace: str = "labels",
                  feedforward: Optional[FeedForward] = None,
-                 attention: Optional[MatrixAttention] = None,
                  label_encoding: Optional[str] = None,
                  include_start_end_transitions: bool = True,
+                 attention=None,
                  constrain_crf_decoding: bool = None,
                  calculate_span_f1: bool = None,
                  dropout: Optional[float] = None,
