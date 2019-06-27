@@ -147,8 +147,10 @@ def wordnet_lookup_xnyms (index_to_tokens, fun):
         for syn in wordnet.synsets(token):
             xnyms_syns |= fun(syn)
 
-        xnyms = [split_multi_word(x.name()) for x in xnyms_syns]
-        antonym_dict[(token,)] = xnyms
+        lemmas = set(flatten([list(x.lemmas()) if isinstance(x, Synset) else x for x in xnyms_syns]))
+
+        strings = [split_multi_word(x.name()) for x in lemmas]
+        antonym_dict[(token,)] = strings
     return antonym_dict
 
 def numerize(d, token2index):
