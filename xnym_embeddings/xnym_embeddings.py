@@ -1,3 +1,5 @@
+import pprint
+import sys
 from collections import OrderedDict, Iterable
 from functools import wraps
 from itertools import cycle
@@ -15,12 +17,6 @@ from xnym_embeddings.time_tools import timeit_context
 import numpy as np
 import torch
 from multiprocessing import Pool
-
-from torch.optim import adam
-from adabound import adabound
-
-adabound
-o = adam
 
 def rolling_window_lastaxis(a, window):
     """Directly taken from Erik Rigtorp's post to numpy-discussion.
@@ -45,7 +41,7 @@ def search_in_rowling(M, single_sequence):
 def search_sequence_numpy(arr,seq):
     """ Find arrays in arrays at arbitrary position on second axis
 
-    Multiple occurences in a sample are given with recurrent sample indices and other positions in the samples
+    Multiple occurrences in a sample are given with recurrent sample indices and other positions in the samples
 
     :param arr: 2d array to look in
     :param seq: 2d array to look from; padding with nan allows to compare sequences with minor length
@@ -55,14 +51,14 @@ def search_sequence_numpy(arr,seq):
     """
     # compute strides from samples with length of seqs
     len_sequences = seq.shape[1]
-    M = rolling_window_lastaxis(arr, len_sequences)#np.lib.stride_tricks.as_strided(arr, shape=(64, 99, 4))
+    M = rolling_window_lastaxis(arr, len_sequences)
 
     # check if they match these smaller sequences
-    matched_antonyms = (search_in_rowling(M,s) for s in seq)
+    matched_antonyms = list(search_in_rowling(M,s) for s in seq)
 
-    # return
+    # return the index of the matched word, the indices of the samples, where it was found and the positions within these samples
     for xnym_index, (sample_indices, position_indices) in enumerate(matched_antonyms):
-        if sample_indices.any():
+        if len(sample_indices)>0:
             yield xnym_index, sample_indices, position_indices
 
 def split_multi_word(word):
@@ -201,22 +197,26 @@ class XnymEmbedder (TokenEmbedder):
                  xnyms:str='antonyms',
                  normalize=True,
                  sparse=True,
+                 parallelize=False,
                  numerize_dict=True):
         super(XnymEmbedder, self).__init__()
         self.xnyms = xnyms
 
         with timeit_context('creating %s-dict' % self.xnyms):
             self.vocab = vocab
+            self.parallelize = parallelize
+
             xnyms_looker_fun = wordnet_lookers[xnyms]
             self.antonym_dict = wordnet_lookup_xnyms(vocab._index_to_token['tokens'], fun=xnyms_looker_fun)
 
             self.antonym_dict[('in','common',)] = [('differ',), ('differs',)]
             self.antonym_dict[('equivocally',)] = [('univocally',)]
+            self.antonym_dict[('micronutrients',)] = [('macronutrients',)]
+
 
             print ('%s-dict' % self.xnyms)
-
-            print (list(self.antonym_dict.keys())[:10])
-            print (list(self.antonym_dict.values())[:10])
+            take = 10
+            pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
 
             self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
 
@@ -253,7 +253,7 @@ class XnymEmbedder (TokenEmbedder):
             for _, s2_indices, p2_index in where_counterpart_matches:
                 both_containing_samples = s1_indices[s2_indices]
                 both_containing_positions = p1_index[s2_indices]
-                difference =  both_containing_positions - p2_index
+                difference = np.fabs(both_containing_positions - p2_index)
 
                 if difference.any():
                     unique_positions = np.unique(both_containing_positions)
@@ -263,7 +263,7 @@ class XnymEmbedder (TokenEmbedder):
                         dimensions = [next(dim) for _ in range(len(both_containing_samples))]
 
                     S[both_containing_samples, both_containing_positions, dimensions] = difference
-                    S[s1_indices[s2_indices],p2_index, dimensions] =  difference
+                    S[s1_indices[s2_indices],p2_index, dimensions] = - difference
         return slice_num, S
 
     @overrides
@@ -276,16 +276,21 @@ class XnymEmbedder (TokenEmbedder):
             representing the current batch.
         Returns
         -------
-        The bag-of-words representations for the input sequence, shape
+        The distance position representations for the input sequence, shape
         ``(batch_size, vocab_size)``
         """
         input_array = inputs.cpu().detach().numpy()
-        array_slices = np.array_split(input_array, 4)
-        with timeit_context('numpy %s-position calculation...' % self.xnyms):
-            with Pool(processes=4) as pool:
-                results = pool.map(self.position_distance_embeddings, enumerate(array_slices))
 
-        S = np.concatenate([x[1] for x in sorted(results, key=lambda x: x[0])])
+        if self.parallelize:
+            array_slices = np.array_split(input_array, 4)
+            with timeit_context('parallel %s-position calculation...' % self.xnyms):
+                with Pool(processes=4) as pool:
+                    results = pool.map(self.position_distance_embeddings, enumerate(array_slices))
+
+            S = np.concatenate([x[1] for x in sorted(results, key=lambda x: x[0])])
+        else:
+            with timeit_context('%s-position calculation...' % self.xnyms):
+                _, S = self.position_distance_embeddings((0, input_array))
 
         #print ( [self.vocab.get_index_to_token_vocabulary()[i] for i in input_array[0]])
 
@@ -293,6 +298,9 @@ class XnymEmbedder (TokenEmbedder):
         tS = transformer.transform(S.reshape(-1, S.shape[-1] )).reshape(*S.shape)
 
         tensor = torch.from_numpy(tS)
+
+        np.set_printoptions(threshold=sys.maxsize)
+        #pprint.pprint (tS)
 
         return tensor
 

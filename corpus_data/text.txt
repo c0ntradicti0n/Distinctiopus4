@@ -1,0 +1,5 @@
+^[\w.,-]+(?=\t)
+
+Macronutrients	NNS	B-NNS	B-SUBJECT are	VBP	O	O required	VBN	I-VBN	I-CONTRAST in	IN	I-IN	I-CONTRAST large	JJ	I-JJ	I-CONTRAST quantities	NNS	I-NNS	I-CONTRAST to	TO	O	O ensure	VB	O	O optimum	JJ	O	O health	NN	O	O and	CC	O	O body	NN	O	O performance	NN	O	O .	.	O	O These	DT	O	O are	VBP	O	O usually	RB	O	O found	VBN	O	O in	IN	O	O large	JJ	O	O quantities	NNS	O	O in	IN	O	O different	JJ	O	O types	NNS	O	O of	IN	O	O food	NN	O	O hence	RB	O	O the	DT	O	O reason	NN	O	O why	WRB	O	O they	PRP	O	O are	VBP	O	O also	RB	O	O required	VBN	O	O in	IN	O	O large	JJ	O	O quantities	NNS	O	O .	.	O	O In	IN	O	O contrast	NN	O	O ,	,	O	O micronutrients	NNS	B-NNS	B-SUBJECT are	VBP	O	O usually	RB	O	O required	VBN	I-VBN	I-CONTRAST in	IN	I-IN	I-CONTRAST small	JJ	I-JJ	I-CONTRAST quantities	NNS	I-NNS	I-CONTRAST in	IN	O	O human	JJ	O	O bodies	NNS	O	O .	.	O	O
+
+Macronutrients are required in large quantities to ensure optimum health and body performance . These are usually found in large quantities in different types of food hence the reason why they are also required in large quantities . In contrast , micronutrients are usually required in small quantities in human bodies .
