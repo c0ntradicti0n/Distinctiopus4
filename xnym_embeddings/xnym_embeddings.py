@@ -82,7 +82,7 @@ def wordnet_looker(fun, kind):
     return aux
 
 @wordnet_looker('hyponyms')
-def get_hyponyms(synset, depth=0, max_depth=2):
+def get_hyponyms(synset, depth=0, max_depth=0):
     if depth > max_depth:
         return set(synset.hyponyms())
     hyponyms = set()
@@ -214,14 +214,19 @@ class XnymEmbedder (TokenEmbedder):
             self.antonym_dict[('micronutrients',)] = [('macronutrients',)]
 
 
+            self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
+
+
             print ('%s-dict' % self.xnyms)
             take = 10
             pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
 
-            self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
 
             if numerize_dict:
                 self.antonym_dict = numerize(self.antonym_dict, vocab.get_token_to_index_vocabulary())
+
+            pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
+
 
             self.normalize = normalize
             self.sparse = sparse
