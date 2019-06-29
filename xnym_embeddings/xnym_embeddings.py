@@ -197,7 +197,7 @@ class XnymEmbedder (TokenEmbedder):
                  xnyms:str='antonyms',
                  normalize=True,
                  sparse=True,
-                 parallelize=False,
+                 parallelize=True,
                  numerize_dict=True):
         super(XnymEmbedder, self).__init__()
         self.xnyms = xnyms
