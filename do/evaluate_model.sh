@@ -1,0 +1,1 @@
+allennlp evaluate --include-package xnym_embeddings.xnym_embeddings --include-package attention_please_tagger.attention_please_tagger --weights-file ./output/experiment_configs/difference_stacked_birectional_lstm.config/model_state_epoch_$2.th   ./output/experiment_configs/difference_stacked_birectional_lstm.config corpus_data/valid.txt
