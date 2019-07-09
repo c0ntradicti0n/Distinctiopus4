@@ -38,6 +38,11 @@ def search_in_rowling(M, single_sequence):
             axis=2
     ))
 
+def last_nonzero(arr, axis, invalid_val=-1):
+    mask = arr!=0
+    val = arr.shape[axis] - np.flip(mask, axis=axis).argmax(axis=axis) - 1
+    return np.where(mask.any(axis=axis), val, invalid_val)
+
 def search_sequence_numpy(arr,seq):
     """ Find arrays in arrays at arbitrary position on second axis
 
@@ -197,10 +202,11 @@ class XnymEmbedder (TokenEmbedder):
                  xnyms:str='antonyms',
                  normalize=True,
                  sparse=True,
-                 parallelize=True,
+                 parallelize=False,
                  numerize_dict=True):
         super(XnymEmbedder, self).__init__()
         self.xnyms = xnyms
+        self.S = None
 
         with timeit_context('creating %s-dict' % self.xnyms):
             self.vocab = vocab
@@ -217,15 +223,15 @@ class XnymEmbedder (TokenEmbedder):
             self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
 
 
-            print ('%s-dict' % self.xnyms)
+            #print ('%s-dict' % self.xnyms)
             take = 10
-            pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
+            #pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
 
 
             if numerize_dict:
                 self.antonym_dict = numerize(self.antonym_dict, vocab.get_token_to_index_vocabulary())
 
-            pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
+            #pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
 
 
             self.normalize = normalize
@@ -244,13 +250,8 @@ class XnymEmbedder (TokenEmbedder):
                 self.xnyms_counterparts.append(counterparts)
             self.xnyms_counterparts = np.array(self.xnyms_counterparts)
 
-    def position_distance_embeddings(self, args):
-        slice_num, input_array = args
+    def position_distance_embeddings(self, input_array):
         where_xnyms_match = list(search_sequence_numpy(input_array, self.xnyms_keys))
-
-        S = np.zeros((*input_array.shape, self.output_dim), dtype=np.float32)
-
-        dim = cycle(range(self.output_dim))
 
         for x1_index, s1_indices, p1_index in where_xnyms_match:
             where_counterpart_matches = list(search_sequence_numpy(input_array[s1_indices], self.xnyms_counterparts[x1_index]))
@@ -261,15 +262,29 @@ class XnymEmbedder (TokenEmbedder):
                 difference = np.fabs(both_containing_positions - p2_index)
 
                 if difference.any():
-                    unique_positions = np.unique(both_containing_positions)
-                    if len(unique_positions) == len(both_containing_positions):
-                        dimensions = next(dim)
-                    else:
-                        dimensions = [next(dim) for _ in range(len(both_containing_samples))]
+                    index_sample_token1 = (both_containing_samples, both_containing_positions)
+                    index_sample_token2 = (s1_indices[s2_indices], p2_index)
+                    occurrences = np.column_stack(index_sample_token1 + index_sample_token2)
+                    #print (occurrences)
 
-                    S[both_containing_samples, both_containing_positions, dimensions] = difference
-                    S[s1_indices[s2_indices],p2_index, dimensions] = - difference
-        return slice_num, S
+                    for i, instance in enumerate(occurrences):
+                        ind = instance.reshape((2,2)).T
+                        #print (ind[0])
+                        #print (ind[1])
+                        try:
+                            samples = self.S[ind[0]]
+                        except:
+                            raise ValueError("Why is that None???")
+                        #print (samples.shape)
+                        tokens = samples[:,ind[1]]
+                        #print (ind)
+                        #print (tokens.shape)
+                        #print (tokens)
+
+                        min_dim = last_nonzero(tokens, axis=1, invalid_val=-1).max() + 1
+                        #print (min_dim)
+                        self.S[tuple(instance[:2]) + (min_dim,)] = difference[i]
+                        self.S[tuple(instance[2:]) + (min_dim,)] = difference[i]
 
     @overrides
     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
@@ -285,6 +300,7 @@ class XnymEmbedder (TokenEmbedder):
         ``(batch_size, vocab_size)``
         """
         input_array = inputs.cpu().detach().numpy()
+        self.S = np.zeros((*input_array.shape, self.output_dim), dtype=np.float32)
 
         if self.parallelize:
             array_slices = np.array_split(input_array, 4)
@@ -295,16 +311,17 @@ class XnymEmbedder (TokenEmbedder):
             S = np.concatenate([x[1] for x in sorted(results, key=lambda x: x[0])])
         else:
             with timeit_context('%s-position calculation...' % self.xnyms):
-                _, S = self.position_distance_embeddings((0, input_array))
+                self.position_distance_embeddings(input_array)
 
         #print ( [self.vocab.get_index_to_token_vocabulary()[i] for i in input_array[0]])
 
-        transformer = Normalizer(norm='l2').fit(S.reshape(-1, S.shape[-1]))  # fit does nothing.
-        tS = transformer.transform(S.reshape(-1, S.shape[-1] )).reshape(*S.shape)
-
+        transformer = Normalizer(norm='l2').fit(self.S.reshape(-1, self.S.shape[-1]))  # fit does nothing.
+        tS = transformer.transform(self.S.reshape(-1, self.S.shape[-1] )).reshape(*self.S.shape)
+        tS = np.sort(tS, axis=0)
+        #print ('%s-position calculation...' % self.xnyms, tS[0])
         tensor = torch.from_numpy(tS)
 
-        np.set_printoptions(threshold=sys.maxsize)
+        #np.set_printoptions(threshold=sys.maxsize)
         #pprint.pprint (tS)
 
         return tensor
@@ -328,7 +345,7 @@ class TestingDistanceEmbeddings(unittest.TestCase):
         self.test_setup()
         inputs = ['good', 'fine', 'bad', 'honest', 'dishonest', 'unsatisfactory', 'imprecise']
         Es = self.xe.forward(inputs)
-        print (Es)
+        #print (Es)
 
         from sklearn.metrics.pairwise import cosine_similarity
 

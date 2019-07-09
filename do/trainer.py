@@ -6,7 +6,8 @@ from allennlp.models import load_archive
 
 import xnym_embeddings.xnym_embeddings
 import attention_please_tagger.attention_please_tagger
-params = Params.from_file('experiment_configs/difference_stacked_birectional_lstm.config')
+import spacy_embedder.spacy_embedder
+params = Params.from_file('experiment_configs/difference_stacked_birectional_lstm3_without_elmo.config')
 serialization_dir = tempfile.mkdtemp()
 model = train_model(params, serialization_dir)
 
