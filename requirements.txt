@@ -5,3 +5,5 @@ allennlp
 torch
 tensorboard==1.0.0a6
 scispacy
+beautifultable
+scispacy

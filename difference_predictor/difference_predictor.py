@@ -9,7 +9,7 @@ from allennlp.predictors.predictor import Predictor
 
 from beautifultable import BeautifulTable
 
-@Predictor.register('difference-tagger')
+@Predictor.register('difference_predictor')
 class DifferenceTaggerPredictor(Predictor):
     """
     Predictor for any model that takes in a sentence and returns
