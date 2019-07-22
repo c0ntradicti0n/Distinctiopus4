@@ -9,7 +9,7 @@ requirements = parse_requirements('./requirements.txt', session='hack')
 requirements = [str(ir.req) for ir in requirements]
 print (requirements)
 setup(
-    name='Distinctipus4',
+    name='Distinctiopus4',
     packages=find_packages(),
     url='https://github.com/c0ntradicti0n/Distinctiopus4.git',
     description='This is NLP software to mine propositions of differences (of course in texts).',
