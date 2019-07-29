@@ -12,7 +12,7 @@ setup(
     name='Distinctiopus4',
     packages=find_packages(),
     url='https://github.com/c0ntradicti0n/Distinctiopus4.git',
-    description='This is NLP software to mine propositions of differences (of course in texts).',
+    description='This is NLP software to mine propositions of difference explanations (in texts).',
     long_description=open('./README.md').read(),
     install_requires= requirements,
     dependency_links = [
