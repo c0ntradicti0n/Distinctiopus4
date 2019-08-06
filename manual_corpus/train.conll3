@@ -15,7 +15,7 @@ Hipster  NNP  I-NNP  I-SUBJECT
 ”  NNP  I-NNP  I-SUBJECT
 is  VBZ  I-VBZ  I-CONTRAST
 a  DT  I-DT  I-CONTRAST
-combination  NN  I-NN  I-CONTRAST
+combination  NN  I-NN  I-5CONTRAST
 of  IN  I-IN  I-CONTRAST
 two  CD  I-CD  I-CONTRAST
 words  NNS  I-NNS  I-CONTRAST

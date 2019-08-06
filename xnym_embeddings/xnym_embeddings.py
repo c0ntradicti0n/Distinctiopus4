@@ -219,14 +219,7 @@ class XnymEmbedder (TokenEmbedder):
             self.antonym_dict[('equivocally',)] = [('univocally',)]
             self.antonym_dict[('micronutrients',)] = [('macronutrients',)]
 
-
             self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
-
-
-            #print ('%s-dict' % self.xnyms)
-            take = 10
-            #pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
-
 
             if numerize_dict:
                 self.antonym_dict = numerize(self.antonym_dict, vocab.get_token_to_index_vocabulary())
@@ -265,24 +258,16 @@ class XnymEmbedder (TokenEmbedder):
                     index_sample_token1 = (both_containing_samples, both_containing_positions)
                     index_sample_token2 = (s1_indices[s2_indices], p2_index)
                     occurrences = np.column_stack(index_sample_token1 + index_sample_token2)
-                    #print (occurrences)
 
                     for i, instance in enumerate(occurrences):
                         ind = instance.reshape((2,2)).T
-                        #print (ind[0])
-                        #print (ind[1])
+
                         try:
                             samples = self.S[ind[0]]
                         except:
                             raise ValueError("Why is that None???")
-                        #print (samples.shape)
                         tokens = samples[:,ind[1]]
-                        #print (ind)
-                        #print (tokens.shape)
-                        #print (tokens)
-
                         min_dim = last_nonzero(tokens, axis=1, invalid_val=-1).max() + 1
-                        #print (min_dim)
                         self.S[tuple(instance[:2]) + (min_dim,)] = difference[i]
                         self.S[tuple(instance[2:]) + (min_dim,)] = difference[i]
 
@@ -323,7 +308,6 @@ class XnymEmbedder (TokenEmbedder):
 
         #np.set_printoptions(threshold=sys.maxsize)
         #pprint.pprint (tS)
-
         return tensor
 
     @overrides
@@ -345,8 +329,6 @@ class TestingDistanceEmbeddings(unittest.TestCase):
         self.test_setup()
         inputs = ['good', 'fine', 'bad', 'honest', 'dishonest', 'unsatisfactory', 'imprecise']
         Es = self.xe.forward(inputs)
-        #print (Es)
-
         from sklearn.metrics.pairwise import cosine_similarity
 
         self.assertEqual (cosine_similarity(Es[0].reshape(1,-1), Es[2].reshape(1,-1))[0][0], -1)
