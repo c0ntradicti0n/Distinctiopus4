@@ -1,3 +1,4 @@
+import itertools
 import pprint
 import sys
 from collections import OrderedDict, Iterable
@@ -59,10 +60,10 @@ def search_sequence_numpy(arr,seq):
     M = rolling_window_lastaxis(arr, len_sequences)
 
     # check if they match these smaller sequences
-    matched_antonyms = list(search_in_rowling(M,s) for s in seq)
+    matched_xnyms = list(search_in_rowling(M,s) for s in seq)
 
     # return the index of the matched word, the indices of the samples, where it was found and the positions within these samples
-    for xnym_index, (sample_indices, position_indices) in enumerate(matched_antonyms):
+    for xnym_index, (sample_indices, position_indices) in enumerate(matched_xnyms):
         if len(sample_indices)>0:
             yield xnym_index, sample_indices, position_indices
 
@@ -141,7 +142,7 @@ def get_antonyms(synset):
     return antonyms
 
 def wordnet_lookup_xnyms (index_to_tokens, fun):
-    antonym_dict = OrderedDict()
+    xnym_dict = OrderedDict()
     vocab =  set (index_to_tokens.values())
     for token in vocab:
         xnyms_syns = set()
@@ -151,8 +152,8 @@ def wordnet_lookup_xnyms (index_to_tokens, fun):
         lemmas = set(flatten([list(x.lemmas()) if isinstance(x, Synset) else x for x in xnyms_syns]))
 
         strings = [split_multi_word(x.name()) for x in lemmas]
-        antonym_dict[(token,)] = strings
-    return antonym_dict
+        xnym_dict[(token,)] = strings
+    return xnym_dict
 
 def numerize(d, token2index):
     number_dict = OrderedDict()
@@ -213,35 +214,45 @@ class XnymEmbedder (TokenEmbedder):
             self.parallelize = parallelize
 
             xnyms_looker_fun = wordnet_lookers[xnyms]
-            self.antonym_dict = wordnet_lookup_xnyms(vocab._index_to_token['tokens'], fun=xnyms_looker_fun)
+            self.xnym_dict = wordnet_lookup_xnyms(vocab._index_to_token['tokens'], fun=xnyms_looker_fun)
 
-            self.antonym_dict[('in','common',)] = [('differ',), ('differs',)]
-            self.antonym_dict[('equivocally',)] = [('univocally',)]
-            self.antonym_dict[('micronutrients',)] = [('macronutrients',)]
+            self.xnym_dict[('in', 'common',)] = [('differ',), ('differs',)]
+            self.xnym_dict[('equivocally',)] = [('univocally',)]
+            self.xnym_dict[('micronutrients',)] = [('macronutrients',)]
 
-            self.antonym_dict = balance_complex_tuple_dict(self.antonym_dict)
+            self.xnym_dict = balance_complex_tuple_dict(self.xnym_dict)
 
             if numerize_dict:
-                self.antonym_dict = numerize(self.antonym_dict, vocab.get_token_to_index_vocabulary())
+                self.xnym_dict = numerize(self.xnym_dict, vocab.get_token_to_index_vocabulary())
 
-            #pprint.pprint (dict(zip(list(self.antonym_dict.keys())[:take],list(self.antonym_dict.values())[:take])))
+            #pprint.pprint (dict(zip(list(self.xnym_dict.keys())[:take],list(self.xnym_dict.values())[:take])))
 
 
             self.normalize = normalize
             self.sparse = sparse
             self.output_dim = projection_dim
 
-            antonym_keys = list(self.antonym_dict.keys())
-            length = max(map(len, antonym_keys))
-            self.xnyms_keys = np.array([list(xi) + [np.nan] * (length - len(xi)) for xi in antonym_keys])
+            xnym_keys = list(self.xnym_dict.keys())
+            length = max(map(len, xnym_keys))
 
-            self.xnyms_counterparts = []
-            antonym_counterpars = list(self.antonym_dict.values())
-            for ac in antonym_counterpars:
-                length = max(map(len, ac))
-                counterparts = np.array([list(xi) + [np.nan] * (length - len(xi)) for xi in ac])
-                self.xnyms_counterparts.append(counterparts)
-            self.xnyms_counterparts = np.array(self.xnyms_counterparts)
+            self.xnyms_keys = np.array([list(xi) + [np.nan] * (length - len(xi)) for xi in xnym_keys])
+            self.xnyms_counterparts = self.generate_xnym_counterparts(self.xnym_dict.values())
+
+            self.xnyms_keys_len_groups = [(l, list(g)) for l, g in
+                                          itertools.groupby(
+                                              sorted(self.xnym_dict.items(),
+                                                     key=lambda x:len(x[0])),
+                                              key=lambda x:len(x[0]))]
+            #self.xnyms_counterparts_len_groups = [self.generate_xnym_counterparts(group.values()) for group in self.xnyms_keys_len_groups]
+
+    def generate_xnym_counterparts(self, values):
+        xnyms_counterparts = []
+        xnym_counterpars = list(values)
+        for ac in xnym_counterpars:
+            length = max(map(len, ac))
+            counterparts = np.array([list(xi) + [np.nan] * (length - len(xi)) for xi in ac])
+            xnyms_counterparts.append(counterparts)
+        return np.array(xnyms_counterparts)
 
     def position_distance_embeddings(self, input_array):
         where_xnyms_match = list(search_sequence_numpy(input_array, self.xnyms_keys))
