@@ -1,4 +1,7 @@
 models/
+.config
+*.hdf5
+*.hdf5.1
 *.tar.gz
 *.th
 
