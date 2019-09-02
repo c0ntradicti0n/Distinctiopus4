@@ -8,6 +8,7 @@ from itertools import cycle
 from nltk import flatten
 from nltk.corpus import wordnet
 from nltk.corpus.reader import Synset
+from nltk.stem import PorterStemmer
 from overrides import overrides
 
 from xnym_embeddings.dict_tools import balance_complex_tuple_dict, invert_dict
@@ -130,6 +131,7 @@ def get_hypernyms(synset):
     result = set(flatten([list(x.lemmas()) if isinstance(x, Synset) else x for x in result_syns]))
     return result
 
+
 @wordnet_looker('antonyms')
 def get_antonyms(synset):
     antonyms = set()
@@ -141,10 +143,18 @@ def get_antonyms(synset):
             antonyms |= set(flatten([list(x.lemmas()) for x in antonym.synset().similar_tos()]))
     return antonyms
 
+@wordnet_looker('synonyms')
+def get_synonyms(synset):
+    synonyms = set(synset.lemmas())
+    return synonyms
+
+porter = PorterStemmer()
+
 def wordnet_lookup_xnyms (index_to_tokens, fun):
     xnym_dict = OrderedDict()
-    vocab =  set (index_to_tokens.values())
-    for token in vocab:
+    lemma_vocab =  set (porter.stem(word) for word in index_to_tokens.values())
+
+    for token in lemma_vocab:
         xnyms_syns = set()
         for syn in wordnet.synsets(token):
             xnyms_syns |= fun(syn)
@@ -152,6 +162,7 @@ def wordnet_lookup_xnyms (index_to_tokens, fun):
         lemmas = set(flatten([list(x.lemmas()) if isinstance(x, Synset) else x for x in xnyms_syns]))
 
         strings = [split_multi_word(x.name()) for x in lemmas]
+
         xnym_dict[(token,)] = strings
     return xnym_dict
 
