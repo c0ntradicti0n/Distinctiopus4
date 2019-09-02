@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 print (os.listdir("./"))
 
 requirements = parse_requirements('./requirements.txt', session='hack')
-requirements = [str(ir.req) for ir in requirements]
+requirements = [str(ir.req) for ir in requirements if ir != 'https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.2.0/en_core_sci_sm-0.2.0.tar.gz']
 print (requirements)
 setup(
     name='Distinctiopus4',
