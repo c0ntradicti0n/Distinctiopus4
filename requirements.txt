@@ -3,7 +3,7 @@ more_itertools
 sklearn
 allennlp
 torch
-tensorboard==1.0.0a6
+tensorboard
 scispacy
 beautifultable
 scispacy
