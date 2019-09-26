@@ -9,6 +9,7 @@ from nltk import flatten
 from nltk.corpus import wordnet
 from nltk.corpus.reader import Synset
 from nltk.stem import PorterStemmer
+
 from overrides import overrides
 
 from xnym_embeddings.dict_tools import balance_complex_tuple_dict, invert_dict
