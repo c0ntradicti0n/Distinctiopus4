@@ -22,7 +22,7 @@ import torch
 from multiprocessing import Pool
 
 
-#import pywsd
+import pywsd
 #Wordnet sense disambiguation
 
 def rolling_window_lastaxis(a, window):

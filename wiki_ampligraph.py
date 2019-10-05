@@ -120,6 +120,8 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
                     # Enable stdout messages (set to false if you don't want to display)
                     verbose=True)
 
+
+
     print ("Training...")
     x_orig = load_wn18()
     model.fit(X_train)
