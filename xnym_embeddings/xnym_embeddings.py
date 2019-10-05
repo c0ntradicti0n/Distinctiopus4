@@ -21,6 +21,10 @@ import numpy as np
 import torch
 from multiprocessing import Pool
 
+
+#import pywsd
+#Wordnet sense disambiguation
+
 def rolling_window_lastaxis(a, window):
     """Directly taken from Erik Rigtorp's post to numpy-discussion.
     <http://www.mail-archive.com/numpy-discussion@scipy.org/msg29450.html>"""
