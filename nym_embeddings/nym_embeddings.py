@@ -58,10 +58,14 @@ class NymEmbedder (TokenEmbedder):
         ``(batch_size, vocab_size)``
         """
         input_array = inputs.cpu().detach().numpy().astype(int)
-        print (input_array)
+        print (input_array.shape)
+        print ([self.model.get_embeddings([str(t) for t in inp]).shape  for inp in input_array])
+        t = torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp]) for inp in input_array])
+        print (t.shape)
         return torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp])  for inp in input_array])
 
     @overrides
     def get_output_dim(self) -> int:
-        return self.model.k
+        print (self.model.k * 2)
+        return self.model.k * 2
 

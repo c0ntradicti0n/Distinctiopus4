@@ -18577,7 +18577,7 @@ alternative  NN  O  O
 to  TO  O  O
 the  DT  O  O
 POP  NN  B-NN  B-SUBJECT
-,  PCT  O  O
+,  PCT  I-PCT  I-CONTRAST
 which  WDT  I-WDT  I-CONTRAST
 is  VBZ  I-VBZ  I-CONTRAST
 the  DT  I-DT  I-CONTRAST

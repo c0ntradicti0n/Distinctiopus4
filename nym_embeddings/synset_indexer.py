@@ -1,4 +1,6 @@
 import logging
+from collections import OrderedDict
+from pprint import pprint
 from typing import Dict, List
 
 from overrides import overrides
@@ -11,6 +13,8 @@ from allennlp.data.token_indexers.token_indexer import TokenIndexer
 from pywsd import disambiguate
 
 import numpy as np
+
+from nym_embeddings.memoizedstringsynsettisation import lazy_lemmatize_tokens
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +30,8 @@ class SynsetIndexer(TokenIndexer[str]):
         self._namespace = namespace
         with open(key_path, 'rb') as handle:
             self.tok2id, self.id2tok = pickle.load(handle)
+            self.tok2id = OrderedDict(self.tok2id)
+            self.id2tok = OrderedDict(self.tok2id)
 
 
 
@@ -37,9 +43,8 @@ class SynsetIndexer(TokenIndexer[str]):
     def tokens_to_indices(
         self, tokens: List[Token], vocabulary: Vocabulary, index_name: str
     ) -> Dict[str, List[int]]:
-        synsets = disambiguate(" ".join([t.text.lower() for t in tokens]), algorithm=pywsd.similarity.max_similarity, similarity_option='wup',
-                     keepLemmas=True)
-        return {index_name: [self.tok2id[str(s[2])] if str(s[2]) in self.tok2id else 0  for s in synsets] }
+        synsets = lazy_lemmatize_tokens(tuple([t.text.lower() for t in tokens]))
+        return {index_name: [self.tok2id[str(syn)] if str(syn) in self.tok2id else 0  for word, syn in synsets] }
 
     @overrides
     def get_padding_lengths(self, token: List[int]) -> Dict[str, int]:
@@ -54,6 +59,11 @@ class SynsetIndexer(TokenIndexer[str]):
         desired_num_tokens: Dict[str, int],
         padding_lengths: Dict[str, int],
     ) -> Dict[str, torch.Tensor]:
+        pprint(padding_lengths)
+        pprint ({
+            key: torch.IntTensor(pad_sequence_to_length(val, desired_num_tokens[key])).shape
+            for key, val in tokens.items()
+        })
         return {
             key: torch.IntTensor(pad_sequence_to_length(val, desired_num_tokens[key]))
             for key, val in tokens.items()
