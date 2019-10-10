@@ -1,0 +1,107 @@
+{
+    "dataset_reader": {
+        "type": "conll2003",
+        "coding_scheme": "IOB1",
+        "tag_label": "ner",
+        "token_indexers": {
+            "elmo": {
+                "type": "elmo_characters"
+            },
+            "nyms": {
+                "type": "synset_indexer",
+                "key_path": "models/wikirr_ke.wnkeys"
+            },
+            "token_characters": {
+                "type": "characters",
+                "min_padding_length": 3
+            }
+        }
+    },
+    "iterator": {
+        "type": "basic",
+        "batch_size": 64
+    },
+    "model": {
+        "type": "attentive_crf_tagger",
+        "constrain_crf_decoding": true,
+        "dropout": 0.5,
+        "encoder": {
+            "type": "stacked_bidirectional_lstm",
+            "hidden_size": 78,
+            "input_size": 409,
+            "num_layers": 3
+        },
+        "feedforward": {
+            "activations": "relu",
+            "hidden_dims": [
+                156,
+                156,
+                156,
+                156,
+                156,
+                156,
+                156
+            ],
+            "input_dim": 156,
+            "num_layers": 7
+        },
+        "include_start_end_transitions": false,
+        "label_encoding": "IOB1",
+        "regularizer": [
+            [
+                "scalar_parameters",
+                {
+                    "alpha": 0.1,
+                    "type": "l2"
+                }
+            ]
+        ],
+        "text_field_embedder": {
+            "token_embedders": {
+                "elmo": {
+                    "type": "elmo_token_embedder",
+                    "do_layer_norm": false,
+                    "dropout": 0,
+                    "options_file": "models/elmo_2x1024_128_2048cnn_1xhighway_options.json",
+                    "weight_file": "models/elmo_2x1024_128_2048cnn_1xhighway_weights.hdf5"
+                },
+                "nyms": {
+                    "type": "nym_embedder",
+                    "model_path": "models/wikirr_ke.amplimodel",
+                    "projection_dim": 20
+                },
+                "token_characters": {
+                    "type": "character_encoding",
+                    "embedding": {
+                        "embedding_dim": 9
+                    },
+                    "encoder": {
+                        "type": "cnn",
+                        "conv_layer_activation": "relu",
+                        "embedding_dim": 9,
+                        "ngram_filter_sizes": [
+                            3
+                        ],
+                        "num_filters": 53
+                    }
+                }
+            }
+        }
+    },
+    "train_data_path": "./manual_corpus/train.conll3",
+    "validation_data_path": "./manual_corpus/test.conll3",
+    "trainer": {
+        "cuda_device": -1,
+        "grad_norm": 1,
+        "histogram_interval": 10,
+        "num_epochs": 200,
+        "num_serialized_models_to_keep": 70,
+        "optimizer": {
+            "type": "adam",
+            "lr": 0.007
+        },
+        "patience": 10,
+        "shuffle": false,
+        "validation_metric": "+f1-measure-overall"
+    }
+}

@@ -110,7 +110,8 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
     print('Test set size: ', X_valid.shape)
 
 
-    model = HolE(batches_count=10, seed=555, epochs=40, k=50, eta=5,
+    model = HolE(batches_count=10, seed=555, epochs=10, k=50, eta=5,
+                 optimizer='adam', optimizer_params={'lr': 1e-2},
                  loss='pairwise', loss_params={'margin':1},
                  regularizer='LP', regularizer_params={'lambda':0.1},
                  verbose=True)
