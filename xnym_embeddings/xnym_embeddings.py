@@ -1,9 +1,6 @@
 import itertools
-import pprint
-import sys
 from collections import OrderedDict, Iterable
 from functools import wraps
-from itertools import cycle
 
 from nltk import flatten
 from nltk.corpus import wordnet
@@ -12,7 +9,7 @@ from nltk.stem import PorterStemmer
 
 from overrides import overrides
 
-from xnym_embeddings.dict_tools import balance_complex_tuple_dict, invert_dict
+from xnym_embeddings.dict_tools import balance_complex_tuple_dict
 from sklearn.preprocessing import Normalizer
 from allennlp.modules.token_embedders.token_embedder import TokenEmbedder
 from allennlp.data import Vocabulary
@@ -22,7 +19,6 @@ import torch
 from multiprocessing import Pool
 
 
-import pywsd
 #Wordnet sense disambiguation
 
 def rolling_window_lastaxis(a, window):

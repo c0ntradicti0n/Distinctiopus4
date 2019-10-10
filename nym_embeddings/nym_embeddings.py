@@ -1,15 +1,10 @@
 from overrides import overrides
 from ampligraph.utils import restore_model
 
-from sklearn.preprocessing import Normalizer
 from allennlp.modules.token_embedders.token_embedder import TokenEmbedder
 from allennlp.data import Vocabulary
 from xnym_embeddings.time_tools import timeit_context
-import numpy as np
 import torch
-
-import pickle
-import pywsd
 
 
 @TokenEmbedder.register("nym_embedder")
@@ -58,8 +53,6 @@ class NymEmbedder (TokenEmbedder):
         ``(batch_size, vocab_size)``
         """
         input_array = inputs.cpu().detach().numpy().astype(int)
-        print (input_array.shape)
-        print ([self.model.get_embeddings([str(t) for t in inp]).shape  for inp in input_array])
         t = torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp]) for inp in input_array])
         print (t.shape)
         return torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp])  for inp in input_array])

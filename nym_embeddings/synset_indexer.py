@@ -10,15 +10,10 @@ from allennlp.common.util import pad_sequence_to_length
 from allennlp.data.vocabulary import Vocabulary
 from allennlp.data.tokenizers.token import Token
 from allennlp.data.token_indexers.token_indexer import TokenIndexer
-from pywsd import disambiguate
-
-import numpy as np
 
 from nym_embeddings.memoizedstringsynsettisation import lazy_lemmatize_tokens
 
 logger = logging.getLogger(__name__)
-
-import pywsd
 
 import pickle
 
@@ -59,11 +54,11 @@ class SynsetIndexer(TokenIndexer[str]):
         desired_num_tokens: Dict[str, int],
         padding_lengths: Dict[str, int],
     ) -> Dict[str, torch.Tensor]:
-        pprint(padding_lengths)
+        """pprint(padding_lengths)
         pprint ({
             key: torch.IntTensor(pad_sequence_to_length(val, desired_num_tokens[key])).shape
             for key, val in tokens.items()
-        })
+        })"""
         return {
             key: torch.IntTensor(pad_sequence_to_length(val, desired_num_tokens[key]))
             for key, val in tokens.items()
