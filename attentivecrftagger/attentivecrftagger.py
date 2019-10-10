@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Dict, Optional, List, Any
 
 from overrides import overrides
@@ -219,7 +220,14 @@ class AttentiveCrfTagger(Model):
             class_probabilities = logits * 0.
             for i, instance_tags in enumerate(predicted_tags):
                 for j, tag_id in enumerate(instance_tags):
-                    class_probabilities[i, j, tag_id] = 1
+                    try:
+                        class_probabilities[i, j, tag_id] = 1
+                    except:
+                        print ("tag id", tag_id)
+                        print ("logits",
+                               logits)
+                        pprint ("output", output)
+
 
             for metric in self.metrics.values():
                 metric(class_probabilities, tags, mask.float())
