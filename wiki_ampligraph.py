@@ -100,10 +100,10 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
     X['valid'] = np.array([list((tok2id[r[0]], r[1], tok2id[r[2]])) for r in X['valid'] if r[0] in known_entities and r[2] in known_entities])
     X['test'] = np.array([list((tok2id[r[0]], r[1], tok2id[r[2]])) for r in X['test'] if r[0] in known_entities and r[2] in known_entities])
 
-    import guppy
+    #import guppy
 
-    h = guppy.hpy()
-    print (h.heap())
+    #h = guppy.hpy()
+    #print (h.heap())
 
     X_train, X_valid = X['train'], X['valid']
     print('Train set size: ', X_train.shape)
