@@ -110,9 +110,10 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
     print('Test set size: ', X_valid.shape)
 
 
-    model = HolE(batches_count=10, seed=555, epochs=100, k=100, eta=5,
+    model = HolE(batches_count=10, seed=555, epochs=40, k=50, eta=5,
                  loss='pairwise', loss_params={'margin':1},
-                 regularizer='LP', regularizer_params={'lambda':0.1})
+                 regularizer='LP', regularizer_params={'lambda':0.1},
+                 verbose=True)
 
     """
     model = ComplEx(batches_count=10, seed=0, epochs=60, k=50, eta=10,
