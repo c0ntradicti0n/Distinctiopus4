@@ -3,7 +3,7 @@ from collections import OrderedDict
 import numpy as np
 import pandas as pd
 from ampligraph.datasets import load_wn18
-from ampligraph.latent_features import ComplEx
+from ampligraph.latent_features import ComplEx, HolE
 from ampligraph.evaluation import evaluate_performance, mrr_score, hits_at_n_score
 
 from ampligraph.latent_features import ComplEx
@@ -110,6 +110,11 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
     print('Test set size: ', X_valid.shape)
 
 
+    model = HolE(batches_count=10, seed=555, epochs=100, k=100, eta=5,
+                 loss='pairwise', loss_params={'margin':1},
+                 regularizer='LP', regularizer_params={'lambda':0.1})
+
+    """
     model = ComplEx(batches_count=10, seed=0, epochs=60, k=50, eta=10,
                     # Use adam optimizer with learning rate 1e-3
                     optimizer='adam', optimizer_params={'lr': 1e-3},
@@ -118,7 +123,7 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
                     # Use L2 regularizer with regularizer weight 1e-5
                     regularizer='LP', regularizer_params={'p': 2, 'lambda': 1e-5},
                     # Enable stdout messages (set to false if you don't want to display)
-                    verbose=True)
+                    verbose=True)"""
 
 
 
