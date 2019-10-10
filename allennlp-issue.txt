@@ -1,0 +1,12 @@
+**System (please complete the following information):**
+ - OS: Ubuntu 18.04
+ - Python version: 3.7
+ - AllenNLP version: 0.9.0
+ - PyTorch version: 1.2.0
+
+**Question**
+What I'm doing wrong with mapping knowledge embeddings generated with a model of wordnet projected by [Ampligraph](https://github.com/Accenture/AmpliGraph)?
+
+I'm working on some task, tagging verbalisations of distinctions in scientific texts. It works with a model derived from NER-Tasks with a LSTM and CRF-Tagger relatively fine. And I thought, one could try, not only relying on statistic language knowlegge by AI-predictions, but also on more declarative knowledge of graphs like wordnet by these knowledge-embeddings. I tried to implement this by doing word-sense-disambiguation and lemmatization on the wordnet synsets and retrieving the embeddings of the synsets as a token-embedder. There are some problems with OOV-tokens and stoppwords for sure, that I try to handle with default values. I hope, that AI is capable of recognizing such default values somehow and using there only semantic embeddings of elmo.
+
+

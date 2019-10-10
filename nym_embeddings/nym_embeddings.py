@@ -55,7 +55,7 @@ class NymEmbedder (TokenEmbedder):
         input_array = inputs.cpu().detach().numpy().astype(int)
         t = torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp]) for inp in input_array])
         print (t.shape)
-        return torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp])  for inp in input_array])
+        return torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp])  for inp in input_array])/20 +0.5
 
     @overrides
     def get_output_dim(self) -> int:
