@@ -28,7 +28,7 @@
         "encoder": {
             "type": "stacked_bidirectional_lstm",
             "hidden_size": 78,
-            "input_size": 409,
+            "input_size": 379,
             "num_layers": 3
         },
         "feedforward": {
