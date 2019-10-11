@@ -229,7 +229,8 @@ class AttentiveCrfTagger(Model):
                         print ("tag id", tag_id)
                         print ("logits",
                                logits)
-                        pprint ("output", output)
+                        pprint ("output")
+                        pprint (output)
 
 
             for metric in self.metrics.values():

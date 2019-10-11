@@ -3,7 +3,7 @@ from collections import OrderedDict
 import numpy as np
 import pandas as pd
 from ampligraph.datasets import load_wn18
-from ampligraph.latent_features import ComplEx, HolE
+from ampligraph.latent_features import ComplEx, HolE, TransE
 from ampligraph.evaluation import evaluate_performance, mrr_score, hits_at_n_score
 
 from ampligraph.latent_features import ComplEx
@@ -109,12 +109,28 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
     print('Train set size: ', X_train.shape)
     print('Test set size: ', X_valid.shape)
 
+    """
+    k=DEFAULT_EMBEDDING_SIZE,
+    eta=DEFAULT_ETA,
+    epochs=DEFAULT_EPOCH,
+    batches_count=DEFAULT_BATCH_COUNT,
+    seed=DEFAULT_SEED,
+    embedding_model_params={'norm': DEFAULT_NORM_TRANSE,
+                         'normalize_ent_emb': DEFAULT_NORMALIZE_EMBEDDINGS,
+                         'negative_corruption_entities': DEFAULT_CORRUPTION_ENTITIES,
+                         'corrupt_sides': DEFAULT_CORRUPT_SIDE_TRAIN},
+    optimizer=DEFAULT_OPTIM,
+    optimizer_params={'lr': DEFAULT_LR},
+    loss=DEFAULT_LOSS,
+    loss_params={},
+    regularizer=DEFAULT_REGULARIZER,
+    regularizer_params={},
+    initializer=DEFAULT_INITIALIZER,
+    initializer_params={'uniform': DEFAULT_XAVIER_IS_UNIFORM},
+    verbose=DEFAULT_VERBOSE):
+    """
 
-    model = HolE(batches_count=10, seed=555, epochs=10, k=50, eta=5,
-                 optimizer='adam', optimizer_params={'lr': 1e-2},
-                 loss='pairwise', loss_params={'margin':1},
-                 regularizer='LP', regularizer_params={'lambda':0.1},
-                 verbose=True)
+    model = TransE(verbose=True)
 
     """
     model = ComplEx(batches_count=10, seed=0, epochs=60, k=50, eta=10,

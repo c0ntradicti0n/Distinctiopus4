@@ -58,7 +58,6 @@ class NymEmbedder (TokenEmbedder):
         ``(batch_size, vocab_size)``
         """
         input_array = inputs.cpu().detach().numpy().astype(int)
-        print (input_array.shape)
         return torch.FloatTensor([[self.model.get_embeddings(str(tok))
                                    if tok != self._oov_idx
                                    else self.oov_pad_vec
