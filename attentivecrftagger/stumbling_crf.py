@@ -325,12 +325,12 @@ class StumblingConditionalRandomField(torch.nn.Module):
         log_denominator = self._input_likelihood(inputs, mask)
         log_numerator = self._joint_likelihood(inputs, tags, mask)
         loss = torch.sum(log_numerator -     log_denominator)
-        if loss>0:
-            from pprint import pprint
-            print ("denominator", log_denominator)
-            print ("numerator", log_numerator)
-            pprint (inputs)
-            pprint (mask)
+        #if loss>0:
+        #    from pprint import pprint
+        #    print ("denominator", log_denominator)
+        #    print ("numerator", log_numerator)
+        #    pprint (inputs)
+        #    pprint (mask)
 
         return loss
 

@@ -226,6 +226,7 @@ class AttentiveCrfTagger(Model):
                     try:
                         class_probabilities[i, j, tag_id] = 1
                     except:
+                        continue
                         print ("tag id", tag_id)
                         print ("logits",
                                logits)
