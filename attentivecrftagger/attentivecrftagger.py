@@ -16,6 +16,9 @@ import allennlp.nn.util as util
 from allennlp.training.metrics import CategoricalAccuracy, SpanBasedF1Measure
 
 from allennlp.predictors.predictor import DEFAULT_PREDICTORS
+
+from attentivecrftagger.stumbling_crf import StumblingConditionalRandomField
+
 DEFAULT_PREDICTORS.update({'attentive_crf_tagger': 'sentence-tagger'})
 
 
@@ -120,7 +123,7 @@ class AttentiveCrfTagger(Model):
             constraints = None
 
         self.include_start_end_transitions = include_start_end_transitions
-        self.crf = ConditionalRandomField(
+        self.crf = StumblingConditionalRandomField(
                 self.num_tags, constraints,
                 include_start_end_transitions=include_start_end_transitions
         )

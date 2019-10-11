@@ -4,8 +4,8 @@ from allennlp.commands.train import train_model
 from allennlp.common import Params
 from allennlp.models import load_archive
 
-#import nym_embeddings.nym_embeddings
-#import nym_embeddings.synset_indexer
+import nym_embeddings.nym_embeddings
+import nym_embeddings.synset_indexer
 import attentivecrftagger.attentivecrftagger
 #import spacy_embedder.spacy_embedder
 

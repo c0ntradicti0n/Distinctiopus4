@@ -1,3 +1,4 @@
+from allennlp.common.checks import ConfigurationError
 from overrides import overrides
 from ampligraph.utils import restore_model
 
@@ -5,6 +6,7 @@ from allennlp.modules.token_embedders.token_embedder import TokenEmbedder
 from allennlp.data import Vocabulary
 from xnym_embeddings.time_tools import timeit_context
 import torch
+import numpy as np
 
 
 @TokenEmbedder.register("nym_embedder")
@@ -28,16 +30,19 @@ class NymEmbedder (TokenEmbedder):
                  vocab: Vocabulary,
                  projection_dim: int = 10,
                  model_path:str=""
-                 ):
+                 , ignore_oov=True):
         super(NymEmbedder, self).__init__()
 
         with timeit_context('initializing knowledge embedder'):
             self.vocab = vocab
+
+            self._ignore_oov = ignore_oov
+            oov_token = vocab._oov_token
+            self._oov_idx = 0
             self.output_dim = projection_dim
             self.model = restore_model(model_name_path=model_path)
 
-
-
+            self.oov_pad_vec = np.zeros(self.get_output_dim())
 
     @overrides
     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
@@ -45,7 +50,7 @@ class NymEmbedder (TokenEmbedder):
         Parameters
         ----------
         inputs: ``torch.Tensor``
-            Shape ``(batch_size, timesteps, sequence_length)`` of word ids
+            Shape ``(batch_size, sequence_length)`` of word ids
             representing the current batch.
         Returns
         -------
@@ -53,9 +58,12 @@ class NymEmbedder (TokenEmbedder):
         ``(batch_size, vocab_size)``
         """
         input_array = inputs.cpu().detach().numpy().astype(int)
-        t = torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp]) for inp in input_array])
-        print (t.shape)
-        return torch.FloatTensor([self.model.get_embeddings([str(t) for t in inp])  for inp in input_array])/20 +0.5
+        print (input_array.shape)
+        return torch.FloatTensor([[np.absolute(self.model.get_embeddings(str(tok)))
+                                   if tok != self._oov_idx
+                                   else self.oov_pad_vec
+                                   for tok in sample]
+                                  for sample in input_array])
 
     @overrides
     def get_output_dim(self) -> int:
