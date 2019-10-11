@@ -5646,7 +5646,7 @@ breeds  NNS  I-NNS  I-CONTRAST
 while  IN  O  O
 Continental  NNP  B-NNP  B-CONTRAST
 Kennel  NNP  I-NNP  I-CONTRAST
-ClubÂ  NN  I-NN  I-CONTRAST
+Club  NN  I-NN  I-CONTRAST
 (  LRB  I-LRB  I-CONTRAST
 CKC  NN  I-NN  I-SUBJECT
 )  RRB  I-RRB  I-CONTRAST
@@ -14662,7 +14662,6 @@ platforms  NNS  O  O
 ,  PCT  O  O
 like  IN  O  O
 :  PCT  O  O
-·  NFP  O  O
 Catholic  NNP  O  O
 and  CC  O  O
 Islam  NNP  O  O
@@ -15606,9 +15605,6 @@ water  NN  I-NN  I-CONTRAST
 vapour  NN  I-NN  I-CONTRAST
 .  PCT  O  O
 
-Â  NN  O  O
-·  NFP  O  O
-
 The  DT  B-DT  B-CONTRAST
 sacred  JJ  I-JJ  I-CONTRAST
 text  NN  I-NN  I-CONTRAST
@@ -15658,7 +15654,7 @@ and  CC  O  O
 Anytime  NNP  O  O
 Any  DT  O  O
 time  NN  O  O
-vsÂ  NNP  O  O
+vs  NNP  O  O
 Anytime  NNP  O  O
 While  IN  O  O
 there  EX  O  O
@@ -16507,8 +16503,6 @@ angel  NN  O  O
 ’s  NN  O  O
 revelations  NNS  O  O
 .  PCT  O  O
-Â  NNP  O  O
-·  NFP  O  O
 Belief  NNP  O  O
 in  IN  O  O
 final  JJ  O  O
@@ -16840,7 +16834,7 @@ This  DT  I-DT  I-CONTRAST
 way  NN  I-NN  I-CONTRAST
 to  TO  I-TO  I-CONTRAST
 find  VB  I-VB  I-CONTRAST
-somethingÂ  NN  I-NN  I-CONTRAST
+something  NN  I-NN  I-CONTRAST
 you  PRP  I-PRP  I-CONTRAST
 just  RB  I-RB  I-CONTRAST
 type  VBP  I-VBP  I-CONTRAST
@@ -17582,7 +17576,7 @@ the  DT  O  O
 Middle  JJ  O  O
 Eastern  JJ  O  O
 nations  NNS  O  O
-includingÂ  NNP  O  O
+including  NNP  O  O
 Syria  NNP  O  O
 ,  PCT  O  O
 Saudi  NNP  O  O
@@ -36412,8 +36406,6 @@ take  VB  O  O
 exams  NNS  O  O
 .  PCT  O  O
 
-Â  NNP  O  O
-·  NFP  O  O
 Quran  NNP  B-NNP  B-SUBJECT
 is  VBZ  I-VBZ  I-CONTRAST
 compilations  NNS  I-NNS  I-CONTRAST
@@ -42187,7 +42179,6 @@ one  CD  I-CD  I-CONTRAST
 ’s  JJ  I-JJ  I-CONTRAST
 assets  NNS  I-NNS  I-CONTRAST
 .  PCT  O  O
-Â  NNP  O  O
 Agreements  NNPS  B-NNPS  B-SUBJECT
 are  VBP  I-VBP  I-CONTRAST
 informally  RB  I-RB  I-CONTRAST
@@ -44203,8 +44194,7 @@ of  IN  O  O
 Eden  NNP  O  O
 .  PCT  O  O
 
-Â  NN  O  O
-·  NFP  O  O
+
 God  NNP  O  O
 is  VBZ  O  O
 the  DT  O  O
@@ -48474,7 +48464,6 @@ enforceable  JJ  I-JJ  I-CONTRAST
 by  IN  I-IN  I-CONTRAST
 law  NN  I-NN  I-CONTRAST
 .  PCT  O  O
-Â  NN  O  O
 An  DT  B-DT  B-CONTRAST
 agreement  NN  I-NN  I-SUBJECT
 is  VBZ  I-VBZ  I-CONTRAST
@@ -59236,7 +59225,7 @@ breeds  NNS  O  O
 while  IN  O  O
 Continental  NNP  O  O
 Kennel  NNP  O  O
-ClubÂ  NN  O  O
+Club  NN  O  O
 (  LRB  O  O
 CKC  NN  O  O
 )  RRB  O  O
@@ -61388,7 +61377,7 @@ breeds  NNS  I-NNS  I-CONTRAST
 while  IN  O  O
 Continental  NNP  B-NNP  B-CONTRAST
 Kennel  NNP  I-NNP  I-CONTRAST
-ClubÂ  NN  I-NN  I-CONTRAST
+Club  NN  I-NN  I-CONTRAST
 (  LRB  I-LRB  I-CONTRAST
 CKC  NN  I-NN  I-SUBJECT
 )  RRB  I-RRB  I-CONTRAST
@@ -62935,8 +62924,6 @@ only  JJ  O  O
 Supreme  NNP  O  O
 Being  NNP  O  O
 .  PCT  O  O
-Â  NNP  O  O
-·  NFP  O  O
 Belief  NNP  O  O
 in  IN  O  O
 divine  JJ  O  O
@@ -68495,7 +68482,7 @@ This  DT  O  O
 way  NN  O  O
 to  TO  O  O
 find  VB  O  O
-somethingÂ  NN  O  O
+something  NN  O  O
 you  PRP  O  O
 just  RB  O  O
 type  VBP  O  O
@@ -72213,7 +72200,6 @@ one  CD  I-CD  I-CONTRAST
 ’s  JJ  I-JJ  I-CONTRAST
 assets  NNS  I-NNS  I-CONTRAST
 .  PCT  O  O
-Â  NNP  O  O
 Agreements  NNPS  B-NNPS  B-SUBJECT
 are  VBP  I-VBP  I-CONTRAST
 informally  RB  I-RB  I-CONTRAST
@@ -78723,8 +78709,6 @@ forecast  NN  I-NN  I-CONTRAST
 .  PCT  O  O
 
 
-Â  NNP  O  O
-·  NFP  O  O
 Belief  NNP  O  O
 in  IN  O  O
 final  JJ  O  O
@@ -79132,8 +79116,6 @@ faith  NN  O  O
 They  PRP  O  O
 are  VBP  O  O
 :  PCT  O  O
-Â  NN  O  O
-·  NFP  O  O
 According  VBG  O  O
 to  IN  O  O
 them  PRP  O  O
@@ -79619,7 +79601,6 @@ one  CD  O  O
 ’s  JJ  O  O
 assets  NNS  O  O
 .  PCT  O  O
-Â  NNP  O  O
 Agreements  NNPS  O  O
 are  VBP  O  O
 informally  RB  O  O
@@ -79833,7 +79814,6 @@ enforceable  JJ  I-JJ  I-CONTRAST
 by  IN  I-IN  I-CONTRAST
 law  NN  I-NN  I-CONTRAST
 .  PCT  O  O
-Â  NN  O  O
 An  DT  B-DT  B-CONTRAST
 agreement  NN  I-NN  I-SUBJECT
 is  VBZ  I-VBZ  I-CONTRAST
@@ -88217,8 +88197,6 @@ is  VBZ  O  O
 finished  VBN  O  O
 .  PCT  O  O
 
-Â  NNP  O  O
-·  NFP  O  O
 Belief  NNP  O  O
 in  IN  O  O
 final  JJ  O  O
@@ -88965,7 +88943,6 @@ platforms  NNS  O  O
 ,  PCT  O  O
 like  IN  O  O
 :  PCT  O  O
-·  NFP  O  O
 Catholic  NNP  O  O
 and  CC  O  O
 Islam  NNP  O  O
@@ -100231,7 +100208,6 @@ the  DT  O  O
 cake  NN  O  O
 .  PCT  O  O
 
-·  NFP  O  O
 Catholicism  NNP  O  O
 believes  VBZ  O  O
 Church  NNP  O  O
@@ -100243,8 +100219,6 @@ the  DT  O  O
 highest  JJS  O  O
 order  NN  O  O
 .  PCT  O  O
-Â  NNP  O  O
-·  NFP  O  O
 Quran  NNP  O  O
 is  VBZ  O  O
 compilations  NNS  O  O
@@ -104780,7 +104754,6 @@ agreement  NN  O  O
 between  IN  O  O
 parties  NNS  O  O
 .  PCT  O  O
-Â  CC  O  O
 The  DT  O  O
 difference  NN  O  O
 lies  VBZ  O  O
@@ -113767,8 +113740,6 @@ faith  NN  O  O
 They  PRP  O  O
 are  VBP  O  O
 :  PCT  O  O
-Â  NN  O  O
-·  NFP  O  O
 According  VBG  O  O
 to  IN  O  O
 them  PRP  O  O
@@ -113788,8 +113759,6 @@ our  PRP  O  O
 human  JJ  O  O
 eyes  NNS  O  O
 .  PCT  O  O
-Â  NN  O  O
-·  NFP  O  O
 
 Difference  NN  O  O
 Between  IN  O  O
@@ -122225,7 +122194,6 @@ agreement  NN  O  O
 between  IN  O  O
 parties  NNS  O  O
 .  PCT  O  O
-Â  CC  O  O
 The  DT  O  O
 difference  NN  O  O
 lies  VBZ  O  O
@@ -123558,8 +123526,6 @@ business  NN  O  O
 profits  NNS  O  O
 .  PCT  O  O
 
-Â  NNP  O  O
-·  NFP  O  O
 Belief  NNP  O  O
 in  IN  O  O
 divine  JJ  O  O
@@ -126109,8 +126075,6 @@ faith  NN  O  O
 They  PRP  O  O
 are  VBP  O  O
 :  PCT  O  O
-Â  NN  O  O
-·  NFP  O  O
 According  VBG  O  O
 to  IN  O  O
 them  PRP  O  O
@@ -128621,7 +128585,6 @@ agreement  NN  O  O
 between  IN  O  O
 parties  NNS  O  O
 .  PCT  O  O
-Â  CC  O  O
 The  DT  O  O
 difference  NN  O  O
 lies  VBZ  O  O
@@ -131203,7 +131166,7 @@ and  CC  O  O
 Anytime  NNP  O  O
 Any  DT  O  O
 time  NN  O  O
-vsÂ  NNP  O  O
+vs  NNP  O  O
 Anytime  NNP  O  O
 While  IN  O  O
 there  EX  O  O
@@ -131523,8 +131486,6 @@ urban  JJ  O  O
 areas  NNS  O  O
 .  PCT  O  O
 
-Â  NNP  O  O
-·  NFP  O  O
 Belief  NNP  O  O
 in  IN  O  O
 divine  JJ  O  O
@@ -138866,7 +138827,7 @@ the  DT  I-DT  I-CONTRAST
 Middle  JJ  I-JJ  I-CONTRAST
 Eastern  JJ  I-JJ  I-CONTRAST
 nations  NNS  I-NNS  I-CONTRAST
-includingÂ  NNP  I-NNP  I-CONTRAST
+including  NNP  I-NNP  I-CONTRAST
 Syria  NNP  I-NNP  I-CONTRAST
 ,  PCT  I-PCT  I-CONTRAST
 Saudi  NNP  I-NNP  I-CONTRAST
@@ -141379,7 +141340,6 @@ platforms  NNS  O  O
 ,  PCT  O  O
 like  IN  O  O
 :  PCT  O  O
-·  NFP  O  O
 Catholic  NNP  O  O
 and  CC  O  O
 Islam  NNP  O  O

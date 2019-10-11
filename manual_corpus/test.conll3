@@ -1415,7 +1415,7 @@ This  DT  I-DT  I-CONTRAST
 way  NN  I-NN  I-CONTRAST
 to  TO  I-TO  I-CONTRAST
 find  VB  I-VB  I-CONTRAST
-somethingÂ  NN  I-NN  I-CONTRAST
+something  NN  I-NN  I-CONTRAST
 you  PRP  I-PRP  I-CONTRAST
 just  RB  I-RB  I-CONTRAST
 type  VBP  I-VBP  I-CONTRAST
@@ -17080,7 +17080,6 @@ variable  JJ  I-JJ  I-CONTRAST
 overheads  NNS  I-NNS  I-CONTRAST
 .  PCT  O  O
 
-·  NFP  O  O
 Catholicism  NNP  O  O
 believes  VBZ  O  O
 Church  NNP  O  O
@@ -21540,8 +21539,7 @@ too  RB  O  O
 easily  RB  O  O
 .  PCT  O  O
 
-Â  NNP  O  O
-·  NFP  O  O
+
 Quran  NNP  B-NNP  B-SUBJECT
 is  VBZ  I-VBZ  I-CONTRAST
 compilations  NNS  I-NNS  I-CONTRAST
@@ -22720,7 +22718,7 @@ and  CC  O  O
 Anytime  NNP  O  O
 Any  DT  O  O
 time  NN  O  O
-vsÂ  NNP  O  O
+vs  NNP  O  O
 Anytime  NNP  O  O
 While  IN  O  O
 there  EX  O  O
@@ -24295,7 +24293,6 @@ son  NN  I-NN  I-CONTRAST
 of  IN  I-IN  I-CONTRAST
 God  NNP  I-NNP  I-CONTRAST
 .  PCT  O  O
-·  NFP  O  O
 Catholicism  NNP  O  O
 believes  VBZ  O  O
 Church  NNP  O  O
@@ -24883,7 +24880,6 @@ enforceable  JJ  O  O
 by  IN  O  O
 law  NN  O  O
 .  PCT  O  O
-Â  NN  O  O
 An  DT  O  O
 agreement  NN  O  O
 is  VBZ  O  O
@@ -37051,7 +37047,7 @@ the  DT  I-DT  I-CONTRAST
 Middle  JJ  I-JJ  I-CONTRAST
 Eastern  JJ  I-JJ  I-CONTRAST
 nations  NNS  I-NNS  I-CONTRAST
-includingÂ  NNP  I-NNP  I-CONTRAST
+including  NNP  I-NNP  I-CONTRAST
 Syria  NNP  I-NNP  I-CONTRAST
 ,  PCT  I-PCT  I-CONTRAST
 Saudi  NNP  I-NNP  I-CONTRAST
