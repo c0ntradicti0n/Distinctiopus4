@@ -8,7 +8,7 @@ from torch.nn.modules.linear import Linear
 from allennlp.common.checks import check_dimensions_match, ConfigurationError
 from allennlp.data import Vocabulary
 from allennlp.modules import Seq2SeqEncoder, TimeDistributed, TextFieldEmbedder, MatrixAttention
-from allennlp.modules import ConditionalRandomField, FeedForward
+from allennlp.modules import FeedForward
 from allennlp.modules.conditional_random_field import allowed_transitions
 from allennlp.models.model import Model
 from allennlp.nn import InitializerApplicator, RegularizerApplicator

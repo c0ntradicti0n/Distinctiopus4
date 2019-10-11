@@ -292,7 +292,7 @@ class StumblingConditionalRandomField(torch.nn.Module):
             last_tags = tags.gather(0, last_tag_index.view(1, batch_size)).squeeze(0)
         except RuntimeError:
             print ("I'm lobo robo!!!")
-            last_tag_index[last_tag_index < 0] = max(last_tag_index)
+            last_tag_index[last_tag_index < 0] = max(last_tag_index)/4
             last_tags = tags.gather(0, last_tag_index.view(1, batch_size)).squeeze(0)
 
 
