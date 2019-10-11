@@ -59,7 +59,7 @@ class NymEmbedder (TokenEmbedder):
         """
         input_array = inputs.cpu().detach().numpy().astype(int)
         print (input_array.shape)
-        return torch.FloatTensor([[np.absolute(self.model.get_embeddings(str(tok)))
+        return torch.FloatTensor([[self.model.get_embeddings(str(tok))
                                    if tok != self._oov_idx
                                    else self.oov_pad_vec
                                    for tok in sample]

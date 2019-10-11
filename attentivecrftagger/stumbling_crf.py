@@ -289,7 +289,7 @@ class StumblingConditionalRandomField(torch.nn.Module):
         # for each instance.
         last_tag_index = mask.sum(0).long() - 1
         last_tag_index[last_tag_index<0] = max(last_tag_index)
-        try:
+        try:  # FLASHBACK BECAUSE OF WORDNET!!!!
             last_tags = tags.gather(0, last_tag_index.view(1, batch_size)).squeeze(0)
         except RuntimeError:
             last_tag_index[last_tag_index < 0] = max(last_tag_index)
