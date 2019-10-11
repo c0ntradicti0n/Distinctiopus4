@@ -130,9 +130,9 @@ if not os.path.isfile(ke_wnkeys_path) or not os.path.isfile(ke_model_path):
     verbose=DEFAULT_VERBOSE):
     """
 
-    model = TransE(verbose=True)
+    model = TransE(verbose=True, k=70, epochs=40)
 
-    """
+    """pyt
     model = ComplEx(batches_count=10, seed=0, epochs=60, k=50, eta=10,
                     # Use adam optimizer with learning rate 1e-3
                     optimizer='adam', optimizer_params={'lr': 1e-3},

@@ -9,7 +9,7 @@ from allennlp.common.checks import check_dimensions_match, ConfigurationError
 from allennlp.data import Vocabulary
 from allennlp.modules import Seq2SeqEncoder, TimeDistributed, TextFieldEmbedder, MatrixAttention
 from allennlp.modules import FeedForward
-from allennlp.modules.conditional_random_field import allowed_transitions
+from allennlp.modules.conditional_random_field import allowed_transitions, ConditionalRandomField
 from allennlp.models.model import Model
 from allennlp.nn import InitializerApplicator, RegularizerApplicator
 import allennlp.nn.util as util
@@ -123,7 +123,7 @@ class AttentiveCrfTagger(Model):
             constraints = None
 
         self.include_start_end_transitions = include_start_end_transitions
-        self.crf = StumblingConditionalRandomField(
+        self.crf = ConditionalRandomField(
                 self.num_tags, constraints,
                 include_start_end_transitions=include_start_end_transitions
         )
@@ -223,18 +223,7 @@ class AttentiveCrfTagger(Model):
             class_probabilities = logits * 0.
             for i, instance_tags in enumerate(predicted_tags):
                 for j, tag_id in enumerate(instance_tags):
-                    try:
-                        class_probabilities[i, j, tag_id] = 1
-                    except:
-                        class_probabilities[i, j, tag_id-1] = 1
-
-                        continue
-                        print ("tag id", tag_id)
-                        print ("logits",
-                               logits)
-                        pprint ("output")
-                        pprint (output)
-
+                    class_probabilities[i, j, tag_id] = 1
 
             for metric in self.metrics.values():
                 metric(class_probabilities, tags, mask.float())
