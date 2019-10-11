@@ -42,7 +42,7 @@ class NymEmbedder (TokenEmbedder):
             self.output_dim = projection_dim
             self.model = restore_model(model_name_path=model_path)
 
-            self.oov_pad_vec = np.ones(self.get_output_dim())
+            self.oov_pad_vec = np.full(self.get_output_dim(), 1/self.output_dim())
 
     @overrides
     def forward(self, inputs: torch.Tensor) -> torch.Tensor:
