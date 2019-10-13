@@ -25,7 +25,7 @@
         "encoder": {
             "type": "stacked_bidirectional_lstm",
             "hidden_size": 100,
-            "input_size": 309,
+            "input_size": 286,
             "num_layers": 3
         },
         "feedforward": {
@@ -65,16 +65,23 @@
                 "token_characters": {
                     "type": "character_encoding",
                     "embedding": {
-                        "embedding_dim": 9
+                        "embedding_dim": 30
                     },
                     "encoder": {
-                        "type": "cnn",
-                        "conv_layer_activation": "relu",
-                        "embedding_dim": 9,
-                        "ngram_filter_sizes": [
-                            3
+                        "type": "cnn-highway",
+                        "embedding_dim": 30,
+                        "filters": [
+                            [
+                                3,
+                                1
+                            ],
+                            [
+                                5,
+                                1
+                            ]
                         ],
-                        "num_filters": 53
+                        "num_highway": 2,
+                        "projection_dim": 30
                     }
                 }
             }
