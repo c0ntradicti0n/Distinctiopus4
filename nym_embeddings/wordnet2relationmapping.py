@@ -99,7 +99,7 @@ def get_derivationally_related_forms(synset):
 
 @wordnet_looker('synonyms')
 def get_synonyms(synset):
-    return synset
+    return synsets()
 
 # derivationally_related_forms and pertainyms definitions
 
@@ -120,4 +120,4 @@ def compute_word_net_mapping():
             if r:
                 g[str(s)][k][str(r)]  = 1
 
-wngraph = compute_word_net_mapping()
+#graph = compute_word_net_mapping()

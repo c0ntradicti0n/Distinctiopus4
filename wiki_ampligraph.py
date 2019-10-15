@@ -29,7 +29,7 @@ from nym_embeddings.wordnet2relationmapping import get_synonyms, get_antonyms, g
 from nltk.corpus import wordnet as wn
 
 wordnet_getters = {
-    "synonym": get_synonyms,
+    #"synonym": get_synonyms,
     "antonym": get_antonyms,
     "hypernym": get_hypernyms,
     # "cohyponym":get_cohyponyms,
