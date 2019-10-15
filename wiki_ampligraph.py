@@ -23,7 +23,7 @@ from ampligraph.evaluation import evaluate_performance
 ke_model_path = "./models/wikirr_ke.amplimodel"
 ke_wnkeys_path = "./models/wikirr_ke.wnkeys"
 
-from xnym_embeddings.xnym_embeddings import get_synonyms, get_antonyms, get_hypernyms, get_cohyponyms, get_cohypernyms, \
+from nym_embeddings.wordnet2relationmapping import get_synonyms, get_antonyms, get_hypernyms, get_cohyponyms, get_cohypernyms, \
     get_hyponyms
 
 from nltk.corpus import wordnet as wn
