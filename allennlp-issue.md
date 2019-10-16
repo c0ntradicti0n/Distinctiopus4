@@ -19,13 +19,13 @@ I try to use graph embeddings of [Ampligraph](https://github.com/Accenture/Ampli
  * the loss function of the crf, which actually can't be negative, runs into negative infinity as it seems
  * the prediction gets stuck at 0.2 F-score (or at 0), that is totally below the values, one can reach without that
 
-The first two errors arise at the computation of the crf-tagger.
+The first two errors arise with computations within the crf-tagger.
 
 Do you think, that these graph embeddings are numerically uncompatible with the other embeddings? If there is some embedding for (synset 1)-relation-(synset 2), the comparison of the embeddings of synset1 and 2 should tell the highest probability of the kind of the relation (like synonym, antonym, hypernym, hyperonym). But maybe there underlies some other clustering to this prediction of the relation, so that these embeddings don't express the kind of these relation and the LSTMS I use don't get it?
 
 And regarding those stoppwords and OOV-tokens, that would need some default, could I pad them with some kind of normalization of the embeddings, to not confuse the Viterbi-algorithm?
 
-I prepared a repository, if you want to try something out. ()
+I prepared a repository, if you want to try something out. (https://github.com/c0ntradicti0n/allennlp_vs_ampligraph)[https://github.com/c0ntradicti0n/allennlp_vs_ampligraph]
 
 
 
