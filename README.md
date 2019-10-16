@@ -70,7 +70,7 @@ This data is fed into the model. In the mass of these samples negative sampling 
 
 * [AllenNlp and Elmo](http://www.dropwizard.io/1.0.2/docs/) - The nlp-ai-framework used
 * [Python](https://maven.apache.org/) - The Language
-* [DifferenceBetween.Net](https://differencebetween.net) - Getting Text Samples
+* [http://www.differencebetween.net](http://www.differencebetween.net) - Getting Text Samples
 
 ## Contributing
 

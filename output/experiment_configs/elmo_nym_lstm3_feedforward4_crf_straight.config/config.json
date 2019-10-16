@@ -1,7 +1,7 @@
 {
     "dataset_reader": {
         "type": "conll2003",
-        "coding_scheme": "IOB1",
+        "coding_scheme": "BIOUL",
         "tag_label": "ner",
         "token_indexers": {
             "elmo": {
@@ -23,13 +23,14 @@
     },
     "model": {
         "type": "attentive_crf_tagger",
+        "calculate_span_f1": true,
         "constrain_crf_decoding": true,
-        "dropout": 0.5,
+        "dropout": 0,
         "encoder": {
             "type": "stacked_bidirectional_lstm",
-            "hidden_size": 78,
+            "hidden_size": 150,
             "input_size": 379,
-            "num_layers": 3
+            "num_layers": 4
         },
         "feedforward": {
             "activations": "relu",
@@ -42,11 +43,11 @@
                 156,
                 156
             ],
-            "input_dim": 156,
+            "input_dim": 300,
             "num_layers": 7
         },
         "include_start_end_transitions": false,
-        "label_encoding": "IOB1",
+        "label_encoding": "BIOUL",
         "regularizer": [
             [
                 "scalar_parameters",
@@ -98,7 +99,7 @@
         "num_serialized_models_to_keep": 70,
         "optimizer": {
             "type": "adam",
-            "lr": 0.007
+            "lr": 0.003
         },
         "patience": 10,
         "shuffle": false,
