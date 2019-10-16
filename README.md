@@ -1,7 +1,7 @@
 # Distinctiopus4
 
-How to mine distinctions/difference utterances in texts? Something like: There are birds, that can fly, and there are pinguines, were dodos and some other birds, that can't fly.
-This is useful for critics of arguments in a [non-monotonically logical](https://plato.stanford.edu/entries/logic-nonmonotonic/) manner. "Tux is a bird. So he can fly? - Oh, but he is a pinguine, so he can't." It's thought to build reasoning machine like H2G2.
+How to mine distinctions/difference utterances in texts? Something like: There are birds, that can fly, and there are penguines, were dodos and some other birds, that can't fly.
+This is useful for critics of arguments in a [non-monotonically logical](https://plato.stanford.edu/entries/logic-nonmonotonic/) manner. "Tux is a bird. So he can fly? - Oh, but he is a penguine, so he can't." It's thought to build reasoning machine like H2G2.
 
 Publication is comming.
 
@@ -63,7 +63,7 @@ temperature  NN  I-NN  I-CONTRAST
 .  PCT  O  O
 ```
 
-This data is fed into the model. In the mass of these samples negative sampling and "first"-sampling are used for better recognizing the structure, there can be text before and after such samples.
+This data is fed into the model. In the mass of these samples negative sampling and "first"-sampling are used for better structuring the predictions of the model, there can be text before and after such samples. It's useful for going step by through documents.
 
 
 ## Built With
