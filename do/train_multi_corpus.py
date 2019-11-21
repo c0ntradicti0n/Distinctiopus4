@@ -5,14 +5,7 @@ from _jsonnet import evaluate_file
 from allennlp.common.file_utils import cached_path
 from allennlp.common.params import parse_overrides, _environment_variables, with_fallback
 
-models  =  {
-    'first': {
-        'patience':20
-    },
-    'over': {
-        'patience': 40
-    }
-}
+models  =  ['first', 'over']
 
 import os
 import argparse
