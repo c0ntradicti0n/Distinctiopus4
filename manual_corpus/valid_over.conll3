@@ -1,7 +1,5 @@
 -DOCSTART- -X- -X- O
 
-
-
 A  DT  B-DT  B-CONTRAST
 shipbuilder  NN  I-NN  I-CONTRAST
 ,  PCT  I-PCT  I-CONTRAST
@@ -51,6 +49,8 @@ causes  NNS  I-NNS  I-SUBJECT
 of  IN  I-IN  I-SUBJECT
 things  NNS  I-NNS  I-SUBJECT
 .  PCT  O  O
+
+
 
 Thus  RB  B-RB  B-CONTRAST
 ,  PCT  I-PCT  I-CONTRAST
