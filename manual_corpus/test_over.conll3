@@ -1,7 +1,5 @@
 -DOCSTART- -X- -X- O
 
-
-
 A  DT  B-DT  B-CONTRAST
 shipbuilder  NN  I-NN  I-CONTRAST
 ,  PCT  I-PCT  I-CONTRAST
@@ -50,43 +48,6 @@ first  JJ  I-JJ  I-SUBJECT
 causes  NNS  I-NNS  I-SUBJECT
 of  IN  I-IN  I-SUBJECT
 things  NNS  I-NNS  I-SUBJECT
-.  PCT  O  O
-
-Thus  RB  B-RB  B-CONTRAST
-,  PCT  I-PCT  I-CONTRAST
-he  PRP  I-PRP  I-CONTRAST
-needs  VBZ  I-VBZ  I-CONTRAST
-to  TO  I-TO  I-CONTRAST
-know  VB  I-VB  I-SUBJECT
-that  IN  I-IN  I-SUBJECT
-wood  NN  I-NN  I-CONTRAST
-,  PCT  I-PCT  I-CONTRAST
-when  WRB  I-WRB  I-CONTRAST
-properly  RB  I-RB  I-CONTRAST
-sealed  VBN  I-VBN  I-CONTRAST
-,  PCT  I-PCT  I-CONTRAST
-floats  NNS  I-NNS  I-CONTRAST
-but  CC  O  O
-he  PRP  B-PRP  B-CONTRAST
-need  VBP  I-VBP  I-CONTRAST
-not  RB  I-RB  I-CONTRAST
-be  VB  I-VB  I-SUBJECT
-able  JJ  I-JJ  I-SUBJECT
-to  TO  I-TO  I-SUBJECT
-show  VB  I-VB  I-SUBJECT
-by  IN  I-IN  I-SUBJECT
-virtue  NN  I-NN  I-SUBJECT
-of  IN  I-IN  I-SUBJECT
-what  WP  I-WP  I-SUBJECT
-principles  NNS  I-NNS  I-SUBJECT
-and  CC  I-CC  I-SUBJECT
-causes  VBZ  I-VBZ  I-SUBJECT
-wood  NN  I-NN  I-CONTRAST
-has  VBZ  I-VBZ  I-CONTRAST
-this  DT  I-DT  I-CONTRAST
-property  NN  I-NN  I-CONTRAST
-of  IN  I-IN  I-CONTRAST
-buoyancy  NN  I-NN  I-CONTRAST
 .  PCT  O  O
 
 A  DT  B-DT  B-CONTRAST
@@ -174,3 +135,41 @@ property  NN  I-NN  I-CONTRAST
 of  IN  I-IN  I-CONTRAST
 buoyancy  NN  I-NN  I-CONTRAST
 .  PCT  O  O
+
+Thus  RB  B-RB  B-CONTRAST
+,  PCT  I-PCT  I-CONTRAST
+he  PRP  I-PRP  I-CONTRAST
+needs  VBZ  I-VBZ  I-CONTRAST
+to  TO  I-TO  I-CONTRAST
+know  VB  I-VB  I-SUBJECT
+that  IN  I-IN  I-SUBJECT
+wood  NN  I-NN  I-CONTRAST
+,  PCT  I-PCT  I-CONTRAST
+when  WRB  I-WRB  I-CONTRAST
+properly  RB  I-RB  I-CONTRAST
+sealed  VBN  I-VBN  I-CONTRAST
+,  PCT  I-PCT  I-CONTRAST
+floats  NNS  I-NNS  I-CONTRAST
+but  CC  O  O
+he  PRP  B-PRP  B-CONTRAST
+need  VBP  I-VBP  I-CONTRAST
+not  RB  I-RB  I-CONTRAST
+be  VB  I-VB  I-SUBJECT
+able  JJ  I-JJ  I-SUBJECT
+to  TO  I-TO  I-SUBJECT
+show  VB  I-VB  I-SUBJECT
+by  IN  I-IN  I-SUBJECT
+virtue  NN  I-NN  I-SUBJECT
+of  IN  I-IN  I-SUBJECT
+what  WP  I-WP  I-SUBJECT
+principles  NNS  I-NNS  I-SUBJECT
+and  CC  I-CC  I-SUBJECT
+causes  VBZ  I-VBZ  I-SUBJECT
+wood  NN  I-NN  I-CONTRAST
+has  VBZ  I-VBZ  I-CONTRAST
+this  DT  I-DT  I-CONTRAST
+property  NN  I-NN  I-CONTRAST
+of  IN  I-IN  I-CONTRAST
+buoyancy  NN  I-NN  I-CONTRAST
+.  PCT  O  O
+
