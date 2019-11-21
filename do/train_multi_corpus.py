@@ -16,8 +16,7 @@ args = parser.parse_args()
 for model in models:
     config = args.config
     json_override = """' {{"train_data_path": "manual_corpus/train_{model}.conll3",    """ \
-                    """  "validation_data_path": "manual_corpus/test_{model}.conll3"}}'""" \
-                    """  "patience: """
+                    """  "validation_data_path": "manual_corpus/test_{model}.conll3"}}'""" 
 
     #overrides_dict = parse_overrides(json_override.format(model=model))
     #params_file = cached_path(config)
